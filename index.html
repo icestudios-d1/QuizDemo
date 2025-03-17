@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fun Quiz with GIFs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .options button {
+            background-color: #0078ff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s ease;
+        }
+        .options button:hover {
+            background-color: #005ecb;
+        }
+        #gif-container {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz Time!</h1>
+        <div id="quiz">
+            <div class="question">What’s your favorite animal?</div>
+            <div class="options">
+                <button onclick="showGif('cat')">Cat</button>
+                <button onclick="showGif('dog')">Dog</button>
+                <button onclick="showGif('lion')">Lion</button>
+                <button onclick="showGif('penguin')">Penguin</button>
+            </div>
+        </div>
+        <div id="gif-container"></div>
+    </div>
+
+    <script>
+        function showGif(choice) {
+            const gifContainer = document.getElementById('gif-container');
+            const gifs = {
+                cat: 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
+                dog: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif',
+                lion: 'https://media.giphy.com/media/MWSRkVoNaC30A/giphy.gif',
+                penguin: 'https://media.giphy.com/media/T9zXeyGafv2D6/giphy.gif'
+            };
+
+            gifContainer.innerHTML = `<img src="${gifs[choice]}" alt="${choice} GIF">`;
+        }
+    </script>
+</body>
+</html>
