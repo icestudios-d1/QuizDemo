@@ -1,65 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Fun Quiz with GIFs</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            text-align: center;
-            padding: 20px;
-        }
-        .quiz-container {
-            max-width: 600px;
-            margin: auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .question {
-            font-weight: bold;
-            margin: 15px 0;
-        }
-        .options button {
-            display: block;
-            width: 100%;
-            background-color: #0078ff;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 10px;
-            margin: 5px 0;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .options button:hover {
-            background-color: #005ecb;
-        }
-        #gif-container {
-            margin-top: 20px;
-        }
-        img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-        .hidden {
-            display: none;
-        }
-        #next-btn {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
-            margin-top: 15px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        #next-btn:hover {
-            background-color: #218838;
-        }
-    </style>
+    <title>Novartis Quiz Demo V3</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="quiz-container">
@@ -97,38 +40,42 @@
             {
                 question: "What's your favorite animal?",
                 options: {
-                    Cat: 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
-                    Dog: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif',
-                    Lion: 'https://media.giphy.com/media/MWSRkVoNaC30A/giphy.gif',
-                    Penguin: 'https://media.giphy.com/media/T9zXeyGafv2D6/giphy.gif'
-                }
+                    Cat: 'assets/cat.gif',
+                    Dog: 'assets/dog.gif',
+                    Lion: 'assets/lion.gif',
+                    Penguin: 'assets/penguin.gif'
+                },
+                correct: "Dog"
             },
             {
                 question: "What's your ideal vacation spot?",
                 options: {
-                    Beach: 'https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif',
-                    Mountains: 'https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif',
-                    Cityscape: 'https://media.giphy.com/media/3o6fIVvO83QYJxk6uY/giphy.gif',
-                    Jungle: 'https://media.giphy.com/media/3orieQvhx7m0wAEt3O/giphy.gif'
-                }
+                    Beach: 'assets/beach.gif',
+                    Mountains: 'assets/mountains.gif',
+                    Cityscape: 'assets/city.gif',
+                    Jungle: 'assets/jungle.gif'
+                },
+                correct: "Mountains"
             },
             {
                 question: "Pick your favorite drink:",
                 options: {
-                    Coffee: 'https://media.giphy.com/media/l0HUqsz2jdQYElRm0/giphy.gif',
-                    Tea: 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif',
-                    Smoothie: 'https://media.giphy.com/media/LXHJRRjnviw7e/giphy.gif',
-                    Soda: 'https://media.giphy.com/media/3oEduF5gZJ2sSOTdwQ/giphy.gif'
-                }
+                    Coffee: 'assets/coffee.gif',
+                    Tea: 'assets/tea.gif',
+                    Smoothie: 'assets/smoothie.gif',
+                    Soda: 'assets/soda.gif'
+                },
+                correct: "Coffee"
             },
             {
                 question: "Choose your dream car:",
                 options: {
-                    Sports: 'https://media.giphy.com/media/3o6ZtaO9BZHcOjmErm/giphy.gif',
-                    SUV: 'https://media.giphy.com/media/5p0yKLK2uKo7nGgiP2/giphy.gif',
-                    Convertible: 'https://media.giphy.com/media/3oFzmefK8i9p4o3JLa/giphy.gif',
-                    Electric: 'https://media.giphy.com/media/3ohhwCR4VRkYlR0mrq/giphy.gif'
-                }
+                    Sports: 'assets/sports.gif',
+                    SUV: 'assets/suv.gif',
+                    Convertible: 'assets/convertible.gif',
+                    Electric: 'assets/electric.gif'
+                },
+                correct: "Electric"
             }
         ];
 
@@ -166,7 +113,17 @@
             for (let [option, gif] of Object.entries(questionData.options)) {
                 const button = document.createElement('button');
                 button.textContent = option;
-                button.onclick = () => showGifAndNext(gif);
+
+                button.onclick = () => {
+                    if (option === questionData.correct) {
+                        button.classList.add('correct');
+                        showGifAndNext(gif, true);
+                    } else {
+                        button.classList.add('wrong');
+                        showGifAndNext(gif, false);
+                    }
+                };
+
                 optionsContainer.appendChild(button);
             }
 
@@ -174,13 +131,14 @@
             document.getElementById('next-btn').classList.add('hidden');
         }
 
-        function showGifAndNext(gif) {
+        function showGifAndNext(gif, isCorrect) {
             const gifContainer = document.getElementById('gif-container');
             gifContainer.innerHTML = `<img src="${gif}" alt="GIF">`;
 
-            document.getElementById('options-container').innerHTML = '';
-            document.getElementById('next-btn').classList.remove('hidden');
-            currentQuestionIndex++;
+            if (isCorrect) {
+                document.getElementById('next-btn').classList.remove('hidden');
+                currentQuestionIndex++;
+            }
         }
 
         window.onload = () => {
